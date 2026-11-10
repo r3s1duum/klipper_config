@@ -32,6 +32,18 @@ Enable it once per clone:
 git config core.hooksPath .githooks
 ```
 
+### Commit message check (commit-msg)
+
+A git `commit-msg` hook in `.githooks/` rejects commits whose title (first line) does not start with a scope in brackets, followed by a colon:
+
+```
+[common]: ...
+[voron2.4]: ...
+[ender3v2]: ...
+```
+
+It is enabled by the same `core.hooksPath` setting as the format check above.
+
 ### Formatting all files
 
 To check or fix every tracked file:

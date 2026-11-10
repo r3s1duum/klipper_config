@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Commit-msg check: fails the commit if the title (first line) does not start
+# with one of the allowed scopes, e.g. "[voron2.4]: Fix PRINT_START".
+# Setup, once per clone:
+#   git config core.hooksPath .githooks
+set -euo pipefail
+
+msg_file="$1"
+title="$(head -n 1 "$msg_file")"
+
+# ERE, so the scope list is a plain alternation; the dot is escaped.
+pattern='^\[(common|voron2\.4|ender3v2|devops)\]:.*'
+
+if [[ ! "$title" =~ $pattern ]]; then
+    echo "commit-msg: title must match: ^\\[(common|voron2\\.4|ender3v2)\\]:.*" >&2
+    echo "commit-msg: got: $title" >&2
+    exit 1
+fi
