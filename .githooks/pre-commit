@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Pre-commit check: fails the commit if staged text files break the format rules.
+# Setup, once per clone:
+#   python3 -m venv .venv && .venv/bin/pip install -e .
+#   git config core.hooksPath .githooks
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+tool=".venv/bin/klipper-format"
+if [ ! -x "$tool" ]; then
+    echo "pre-commit: $tool not found. Run: python3 -m venv .venv && .venv/bin/pip install -e ." >&2
+    exit 1
+fi
+
+mapfile -d '' -t files < <(git diff --cached --name-only --diff-filter=ACMR -z)
+if [ "${#files[@]}" -eq 0 ]; then
+    exit 0
+fi
+
+"$tool" --check "${files[@]}"

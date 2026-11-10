@@ -1,3 +1,6 @@
 /printer.cfg
 /moonraker.conf
 *.bkp
+.venv/
+*.egg-info/
+__pycache__/
