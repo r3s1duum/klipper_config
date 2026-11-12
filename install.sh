@@ -18,6 +18,7 @@ build_moonraker() {
 case $1 in
   $voron24)
     ln -s "$SCRIPT_DIR/printers/$voron24/printer.cfg" "$SCRIPT_DIR/printer.cfg"
+    ln -s "$SCRIPT_DIR/printers/$voron24/KlipperScreen.conf" "$SCRIPT_DIR/KlipperScreen.conf"
     build_moonraker $voron24
     ;;
   $ender3v2)
